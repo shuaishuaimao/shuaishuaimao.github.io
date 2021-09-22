@@ -154,6 +154,157 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-vue-router的传参方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/22/vue-router%E7%9A%84%E4%BC%A0%E5%8F%82%E6%96%B9%E5%BC%8F/">vue-router的传参方式</a>
+    </h1>
+  
+
+        
+        <a href="/2021/09/22/vue-router%E7%9A%84%E4%BC%A0%E5%8F%82%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2021-09-22T12:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="今天-向大家介绍的是-vue-router的传参方式和router的使用技巧"><a href="#今天-向大家介绍的是-vue-router的传参方式和router的使用技巧" class="headerlink" title="今天 向大家介绍的是 vue-router的传参方式和router的使用技巧"></a>今天 向大家介绍的是 vue-router的传参方式和router的使用技巧</h1><h2 id="vue-router传参方法一："><a href="#vue-router传参方法一：" class="headerlink" title="vue-router传参方法一："></a>vue-router传参方法一：</h2><ul>
+<li>1.路由配置</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>:<span class="string">&#x27;/describe/:id&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;describe&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>:<span class="keyword">import</span>()=&gt;(<span class="string">&quot;你写的组件的相对路径&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中path表示地址栏中的hash值，：id表示传递的参数，它可以写多个，写法是<code>/describe/:id/:xxx/......</code></p>
+</blockquote>
+<blockquote>
+<p>component之后的import表示路由使用的是懒加载，这种写法可以防止页面减少过慢的问题。你也可以使用component ：组件名的写法，但要在之间使用import引入</p>
+</blockquote>
+<ul>
+<li><p>2.使用方法</p>
+<ul>
+<li>直接调用$router..push()实现携带参数的跳转</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$router.push(&#123;</span><br><span class="line">  <span class="comment">// 这个id是一个变量，随便什么值都可以</span></span><br><span class="line">  <span class="attr">path</span>:<span class="string">`/describe/<span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>3.获取方法（在describe页面）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$route.params.id</span><br><span class="line"><span class="comment">//使用以上方法可以拿到上个页面传递过来的id值或者其他的变量值</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>注：$router表示当前的整个路由，而$route 表示的是子路由，可以理解为当前页面的路由</p>
+</blockquote>
+<h2 id="vue-router传参方法二："><a href="#vue-router传参方法二：" class="headerlink" title="vue-router传参方法二："></a>vue-router传参方法二：</h2><ul>
+<li>1.路由配置</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>:<span class="string">&#x27;/describe&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;describe&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>:<span class="function"><span class="params">import</span>=&gt;</span>(<span class="string">&quot;你写的组件相对路径&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$router.push(&#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;describe&#x27;</span>,</span><br><span class="line">    <span class="attr">params</span>:&#123;</span><br><span class="line">       <span class="attr">id</span>:id</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// query:&#123;</span></span><br><span class="line">    <span class="comment">//	id:id</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 父组件中：通过路由属性中的name来确定匹配的路由，通过params来传递参数</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用push方式跳转路由有两种写法：</p>
+<ul>
+<li>基于name跳转，params传递参数<ul>
+<li>此方式类似于Ajax请求的post方式，参数较为隐秘，适用于密码或者账号这种需要隐秘性高的</li>
+</ul>
+</li>
+<li>基于path跳转，query传参<ul>
+<li>此方式类似于Ajax请求的get方式，参数直接会展示在地址栏上，适用于隐秘性较低或者对安全性要求不高的</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>获取方法（在describe页面）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$route.params.id</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="route适用小技巧"><a href="#route适用小技巧" class="headerlink" title="$route适用小技巧"></a>$route适用小技巧</h2><ul>
+<li>1.$route.path</li>
+</ul>
+<blockquote>
+<p>类型：<strong>string</strong></p>
+<p>字符串，对应当前路由的路径，总是解析为绝对路径</p>
+</blockquote>
+<ul>
+<li>2.$route.params</li>
+</ul>
+<blockquote>
+<p>类型：<strong>object</strong></p>
+<p>一个key/value对象，包含了动态片段和全局匹配片段，如果没有路由参数，就是一个空对象</p>
+</blockquote>
+<ul>
+<li>3.$route.query</li>
+</ul>
+<blockquote>
+<p>类型：<strong>Object</strong></p>
+<p>一个key/value对象，表示URL查询参数。例如，对于路径/foo?user=1,则有$route.query.user ==1，如果没有查询参数，则是个空对象</p>
+</blockquote>
+<ul>
+<li>4.$route.hash</li>
+</ul>
+<blockquote>
+<p>类型：**string **</p>
+<p>当前路由的hash值（带#号），如果没有hash值，则为空字符串</p>
+</blockquote>
+<ul>
+<li>5.$route.fullPath</li>
+</ul>
+<blockquote>
+<p>类型：<strong>string</strong></p>
+<p>完成解析后的URL，包含查询参数和hash的完整路径</p>
+</blockquote>
+<p><strong><code>新手博客，有错误欢迎纠正</code></strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/09/22/vue-router%E7%9A%84%E4%BC%A0%E5%8F%82%E6%96%B9%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-接手前端项目开发的步骤" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
