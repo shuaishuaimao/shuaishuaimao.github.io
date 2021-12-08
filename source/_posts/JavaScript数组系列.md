@@ -15,7 +15,7 @@
   - const arr = [1, 2, 3, 4];    console.log(arr.reduce((prev, cur) => prev + cur, 0)); // 10
 - **flat**   扁平化多维数组，（ES6的方法，所以IE这些浏览器不支持）
   - const arr = [1 , 2 , [ 3 , 4] , [5 , [6 , 7]]]
-  - arr.flat([depth])  **[depth]**表示扁平化深度，一般直接使用**Infinity（无限的）**解决一切问题
+  - arr.flat([depth])  **[depth]**表示扁平化深度，一般直接使用**Infinity**解决一切问题
 - **find**   根据相应的函数查到到符合条件的数组元素，若有多个满足条件，则返回第一个符合条件的元素
 - **findIndex**  根据相应的函数查找到符合条件的数组元素索引
 
